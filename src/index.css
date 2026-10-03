@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #111111;
+    color: #111111;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #C6A66B;
+    color: #111111;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .clip-reveal-bottom {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom cursor — hide native cursor on desktop */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* Marquee */
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Scroll indicator line */
+@keyframes scrollLine {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  40% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  60% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.animate-scroll-line {
+  animation: scrollLine 2.4s ease-in-out infinite;
+}
+
+/* Form input floating label */
+.form-field {
+  position: relative;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(245, 241, 234, 0.2);
+  padding: 1.5rem 0 0.75rem;
+  color: #f5f1ea;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.4s ease;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-bottom-color: #c6a66b;
+}
+
+.form-field label {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  color: rgba(245, 241, 234, 0.5);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-field input:focus + label,
+.form-field input:not(:placeholder-shown) + label,
+.form-field textarea:focus + label,
+.form-field textarea:not(:placeholder-shown) + label,
+.form-field select:focus + label,
+.form-field select.has-value + label {
+  top: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c6a66b;
+}
+
+.form-field select {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-field select option {
+  background: #171717;
+  color: #f5f1ea;
+}
+
+/* Focus underline animation */
+.form-field::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #c6a66b;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-field:focus-within::after {
+  width: 100%;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .animate-scroll-line {
+    animation: none !important;
+    opacity: 0.5;
+  }
+}
